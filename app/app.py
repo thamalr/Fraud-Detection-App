@@ -74,7 +74,9 @@ with tab1:
                     df = frequency_encode(df, catf)
                     X = df.drop(columns=['isFraud'], errors='ignore')
                     X = X.reindex(columns=xgb_model.feature_names, fill_value=0)
-                    y_pred = xgb_model.predict(X)
+                    dtest = xgb.DMatrix(X)
+                    y_pred = xgb_model.predict(dtest)
+                    y_pred = (y_pred > 0.5).astype(int)
                     df_output = pd.DataFrame({"TransactionID": tx_ids, "Prediction": y_pred})
 
                     # Summary section
