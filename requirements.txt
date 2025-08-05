@@ -6,3 +6,4 @@ joblib
 transformers
 torch
 regex
+xgboost

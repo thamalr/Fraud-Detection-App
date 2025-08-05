@@ -43,7 +43,10 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 MODEL_DIR = os.path.join(BASE_DIR, "models")
 
 # Load models from absolute path
-xgb_model = joblib.load(os.path.join(MODEL_DIR, "xgboost_model.pkl"))
+import xgboost as xgb
+xgb_model = xgb.Booster()
+xgb_model.load_model(os.path.join(MODEL_DIR, "xgb_model.json"))
+
 tokenizer = DistilBertTokenizerFast.from_pretrained(os.path.join(MODEL_DIR, "distilbert_finetuned"))
 nlp_model = DistilBertForSequenceClassification.from_pretrained(os.path.join(MODEL_DIR, "distilbert_finetuned"))
 
