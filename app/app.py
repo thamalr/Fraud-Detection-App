@@ -36,9 +36,17 @@ def frequency_encode(df, features):
     return df
 
 # --- Load Models ---
-xgb_model = joblib.load("../models/xgboost_model.pkl")
-tokenizer = DistilBertTokenizerFast.from_pretrained("../models/distilbert_finetuned/")
-nlp_model = DistilBertForSequenceClassification.from_pretrained("../models/distilbert_finetuned/")
+import os
+
+# Get base directory (repo root, one level above /app/)
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+MODEL_DIR = os.path.join(BASE_DIR, "models")
+
+# Load models from absolute path
+xgb_model = joblib.load(os.path.join(MODEL_DIR, "xgboost_model.pkl"))
+tokenizer = DistilBertTokenizerFast.from_pretrained(os.path.join(MODEL_DIR, "distilbert_finetuned"))
+nlp_model = DistilBertForSequenceClassification.from_pretrained(os.path.join(MODEL_DIR, "distilbert_finetuned"))
+
 nlp_model.eval()
 
 st.title("🔊 Fraud Detection App")
